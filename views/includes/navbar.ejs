@@ -1,5 +1,5 @@
 <style>
-  .search-btn{
+  /* .search-btn{
     background-color: #fe424d;
     color: white;
     border-radius: 25px;
@@ -16,50 +16,225 @@
   .search-inp{
     border-radius: 25px;
     padding: 0.25rem 3rem 0.25rem 3rem;
+  } */
+  .Navbar{
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 7px;
+    align-items: center;
+    border-bottom:1px solid rgba(0, 0, 0, 0.2);
+    position:sticky;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background-color: white;
+  }
+  .nav-logo{
+    display: flex;
+  }
+  .nav-logo .navbar-brand{
+    margin-right: 10px;
+  }
+  .navbar-btns{
+    display: flex;
+  }
+  .navbar-btns a{
+    margin-right: 25px;
+  }
+  .search input{
+    padding: 5px;
+    padding-bottom: 6px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 20px;
+    margin-right: 15px;
+  }
+  .search .search-btn i{
+    margin-right: 5px;
+  }
+  .search .search-btn{
+    background-color: #fe424d;
+    color: white;
+    padding: 7px;
+    border-radius: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .menubar a i{
+    font-size: 33px;
+  }
+  .menubar{
+    display: none;
+    cursor: pointer;
+  }
+  .navbar-btns-responsive{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: whitesmoke;
+    border: 1ps solid rgba(0, 0, 0, 0.2);
+    width: 20%;
+    align-items: center;
+    position: fixed;
+    top: 70px;
+    right: 0;
+    z-index: 100;
+    display: none;
+  }
+  .navbar-btns-responsive .close{
+    position: absolute;
+    top: 0;
+    right:0;
+    font-size: 25px;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+  } 
+
+  @media (max-width:1000px) {
+    .menubar{
+      display: block
+    }
+    .navbar-btns{
+      display: none;
+    }
+  }
+  @media (max-width:900px) {
+    .navbar-btns-responsive{
+      width: 30%;
+    }
+  }
+  @media (max-width:650px) {
+    .navbar-btns-responsive{
+      width: 40%;
+    }
+  }
+  @media (max-width:450px) {
+    .navbar-btns-responsive{
+      width: 50%;
+    }
+  }
+  @media (max-width:450px) {
+    .navbar-btns-responsive{
+      width:60%;
+    }
+  }
+
+  @media (max-width:700px) {
+    .search input{
+    padding: 5px;
+    padding-bottom: 6px;
+    border-radius: 10px;
+    margin-right: 10px;
+  }
+  .search .search-btn i{
+    margin-right: 3px;
+  }
+  .search .search-btn{
+    padding: 7px;
+    border-radius: 10px;
+  }
+  }
+
+  @media (max-width:700px) {
+    .search input{
+    padding: 3px;
+    padding-bottom: 4px;
+    border-radius: 8px;
+    margin-right: 8px;
+  }
+  .search .search-btn i{
+    margin-right: 3px;
+  }
+  .search .search-btn{
+    padding: 3px;
+    border-radius: 8px;
+  }
+  .Navbar .nav-link{
+    display: none;
+  }
+  }
+  @media (max-width:450px) {
+    .search input{
+     padding: 3px;
+     padding-bottom: 4px;
+     border-radius: 8px;
+     margin-right: 5px;
+     font-size: 12px;
+  }
+  .search .search-btn i{
+    margin-right: 3px;
+  }
+  .search .search-btn{
+    padding: 3px;
+    border-radius: 8px;
+    font-size: 12px;
+  }
+  .Navbar .nav-link{
+    display: none;
+  }
+  .menubar a i{
+    font-size: 25px;
+  }
+  .nav-logo .logo{
+    font-size: 25px;
+  }
   }
 </style>
-
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
-      <button class="navbar-toggler" 
-        type="button" 
-        data-bs-toggle="collapse" 
-        data-bs-target="#navbarNavAltMarkup" 
-       
-       >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          
-          <a class="nav-link" href="/listings">Explore</a>
-          
-         
-        </div>
-        <div class="navbar-nav ms-auto">
-          <form class="d-flex" role="search" action="/listings/search" method="GET">
-            <input class="form-control me-2 search-inp" 
-            type="search" 
-            placeholder="Search Destination" 
-            aria-label="Search"
-            name="search">
-            
-            <button class="btn search-btn" 
-            type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
-          </form>
-        </div>
-        <div class="navbar-nav ms-auto">
-          <a class="nav-link" href="/listings/new">Airbnb your home</a>
-          <% if(!currUser){ %>
-            <a class="nav-link "  href="/signup"><b>Sign Up</b></a>
-            <a class="nav-link" href="/login"><b>Log In</b></a>
-          <% } %>
-          <% if(currUser){%>
-            <a class="nav-link" href="/logout"><b>Log Out</b></a>
-          <% } %>
-          
-        </div>
-      </div>
+<body>
+  <div class="Navbar">
+    <div class="nav-logo">
+      <a class="navbar-brand logo" href="/listings"><i class="fa-regular fa-compass"></i></a>
+      <a class="nav-link" href="/listings">Explore</a>
     </div>
-  </nav>
+    <div class="search">
+      <form>
+        <input type="text" placeholder="Search Destination">
+        <button class="btn search-btn" 
+          type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search
+        </button>
+      </form>
+    </div>
+    <div class="menubar">
+      <a><i class="fa-solid fa-bars"></i></a>
+    </div>
+
+    <div class="navbar-btns">
+      <a class="nav-link" href="/listings/new">Airbnb your home</a>
+      <% if(!currUser){ %>
+        <a class="nav-link "  href="/signup"><b>Sign Up</b></a>
+        <a class="nav-link" href="/login"><b>Log In</b></a>
+      <% } %>
+      <% if(currUser){%>
+        <a class="nav-link" href="/logout"><b>Log Out</b></a>
+      <% } %>
+      
+    </div>
+
+  </div>
+  <div class="navbar-btns-responsive">
+    <a class="close"><i class="fa-solid fa-xmark"></i></a>
+    <a class="nav-link" href="/listings/new">Airbnb your home</a>
+    <% if(!currUser){ %>
+      <a class="nav-link "  href="/signup"><b>Sign Up</b></a>
+      <a class="nav-link" href="/login"><b>Log In</b></a>
+    <% } %>
+    <% if(currUser){%>
+      <a class="nav-link" href="/logout"><b>Log Out</b></a>
+    <% } %>
+    
+  </div>
+</body>
+
+<script>
+  let menubar = document.querySelector(".menubar");
+  let showBox = document.querySelector(".navbar-btns-responsive");
+  let closeMenu = document.querySelector(".close")
+
+  menubar.addEventListener("click",()=>{
+    showBox.style.display="block"
+  })
+  closeMenu.addEventListener("click",()=>{
+    showBox.style.display = "none"
+  })
+</script>

@@ -2,8 +2,12 @@
 <style>
   #filters{
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    flex-wrap: nowrap; 
+    overflow-x: auto; 
+    padding: 1rem;
+    scrollbar-width: thin; 
+    scrollbar-color: #cccccc transparent;
+    margin-bottom: 15px;
   }
   .filter{
     text-align: center;
@@ -25,13 +29,11 @@
     border: 1px black solid;
     border-radius: 1rem;
     display: flex;
-    
+    flex-shrink: 0;
     height: 3rem;
     padding: 1rem;
     margin-left: 3rem;
     align-items: center;
-    /* justify-content: center; */
-    
   }
   .filter a{
    text-decoration: none;
@@ -47,6 +49,18 @@
   }
   .heart h3:hover{
     color: #fe424d;
+  }
+  #filters::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  #filters::-webkit-scrollbar-thumb {
+    background-color: #cccccc;
+    border-radius: 4px;
+  }
+
+  #filters::-webkit-scrollbar-track {
+    background: transparent;
   }
 </style>
 <body>
@@ -145,14 +159,12 @@
       </div>
       
     </div>
-    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 g-3">
         <%for(let listing of allListings){%>
-          <a href="/listings/<%=listing._id%>" class="listing_links">
+          
             <div class="card col listing-card">
                 <img src="<%=listing.image.url%>"
                 class="card-img-top" alt="Listing_image" style="height:20rem;"/>
-                
-                 <div class="card-img-overlay heart"><h3>&#x2764;</h3></div>
                 <div class="card-body">
                  
                   <p class="card-text">
@@ -163,8 +175,8 @@
                     </p>
                   </p>
                 </div>
+                <a href="http://localhost:8080/listings/<%=listing._id%>" class="listing_links">View Details</a>
               </div>
-            </a>
             <%}%>
     </div>
     
@@ -184,6 +196,5 @@
   }
   });
 
-  
   
 </script>

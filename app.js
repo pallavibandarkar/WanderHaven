@@ -20,17 +20,17 @@ const reviewRouter = require("./routes/reviews.js");
 const userRouter = require("./routes/user.js");
 
 
-const mongoUrl = "mongodb://127.0.0.1:27017/wanderlust";
+const dbUrl = process.env.ATLAS_DBURL;
 
 main().then(()=>{
-    console.log("Connected to db successfully!!!");
+    console.log("Connected to Atlas db successfully!!!");
 })
 .catch(()=>{
     console.log("oops!Something went wrong!!!");
 })
 
 async function main(){
-    await mongoose.connect(mongoUrl);
+    await mongoose.connect(dbUrl);
 }
 
 

@@ -1,0 +1,225 @@
+
+<% layout("/layouts/boilerplate")%>
+<script>
+    const mapToken = "<%= process.env.MAP_TOKEN%>";
+    const listing = <%-JSON.stringify(listing) %>;
+    const latitude = listing.geometry.coordinates[1]; // Latitude
+    const longitude = listing.geometry.coordinates[0]; // Longitude
+</script>
+
+<body>
+    <div class="row mt-3">
+        <div class="col-8 offset-2">
+            <h3><b><%=listing.title%></b></h3>
+        </div>
+     
+    
+        <div class="card col-8 offset-2 show-card listing-card">
+           <img src="<%=listing.image.url%>" class="card-img-top show-img" alt="listing_image">
+           <div class="card-body">
+              <p class="card-text">Owned by 
+                <b><i><%=listing.owner.username %></i></b>
+              </p>
+              <p class="card-text"><%=listing.description %></p>
+              <p class="card-text">
+                &#8377;<%=listing.price.toLocaleString("en-IN")%>
+              </p>
+              <p class="card-text"><%=listing.location%></p>
+              <p class="card-text"><%=listing.location%></p>
+           </div>
+
+        </div>
+    
+        <br>
+
+        <%if(currUser && listing.owner._id.equals(currUser._id)){ %>
+        <div class="btns mb-3">
+          <a 
+            href="/listings/<%=listing._id%>/edit" 
+            class="btn btn-dark col-1 offset-2 edit-btn"
+          >
+          Edit
+          </a>
+          <form method="POST" action="/listings/<%=listing._id%>?_method=Delete">
+            <button class="btn btn-dark offset-3">Delete</button>
+          </form>
+        </div>
+        <% }%>
+    
+        <div class="col-8 offset-2 mb-3 mt-3">
+          <hr>
+          <%if(currUser) {%>
+          <h4>Add a review</h4>
+          <form method="POST" 
+            action="/listings/<%=listing._id%>/reviews"
+            novalidate class="needs-validation">
+            <div class="mb-3">
+                <p>Rating:</p>
+                <fieldset class="starability-slot">
+
+                  <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+                  <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                  <label for="first-rate1" title="Terrible">1 star</label>
+                  <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                  <label for="first-rate2" title="Not good">2 stars</label>
+                  <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                  <label for="first-rate3" title="Average">3 stars</label>
+                  <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                  <label for="first-rate4" title="Very good">4 stars</label>
+                  <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                  <label for="first-rate5" title="Amazing">5 stars</label>
+                </fieldset>
+            
+            </div>
+
+            <div class="mb-3">
+                <label for="comment" class="form-label">Comments</label>
+                <textarea 
+                name="review[comment]" 
+                id="comment" 
+                rows="4" 
+                cols="30"
+                class="form-control "
+                required
+                ></textarea>
+                <div class="invalid-feedback">
+                    please add some comment for review
+                </div>
+            </div>
+            <button class="btn btn-outline-dark mb-3">Submit</button>
+            <hr>
+           </form>
+        
+           <% }%>
+        
+       
+           <%if(listing.reviews.length > 0){ %>  
+            <div class="row ">     
+             <%for(review of listing.reviews){%>
+              <h4>All review</h4>
+              <div class="card col-5 ms-2 mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">@<%=review.author.username%></h5>
+                    
+                    <!-- <p class="card-text"><%=review.rating%> Stars</p> -->
+                    <p class="starability-result card-text mb-3 mt-3" data-rating="<%=review.rating%>"></p>
+                    <p class="card-text"><%=review.comment%></p>
+                </div>
+                <form class="mb-3 mt-3" method="POST" action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE">
+                    <button class="btn btn-dark btn-sm">Delete</button>
+                </form>
+              </div>
+        
+           <%}%>
+           </div>
+        <% } %>
+
+        </div>
+    <!-- <div class="col-8 offset-3 mt-4">
+        <h4>Book Your Stay</h4>
+        <div id="calendar"></div>
+        <p>Per Night Cost: ₹<span id="perNightCost"><%= listing.price %></span></p>
+        <p>Total Nights: <span id="totalNights">0</span></p>
+        <p>Total Price: ₹<span id="totalPrice">0</span></p>
+        <form id="bookingForm" method="POST" action="/listings/<%= listing._id %>/book">
+            <input type="hidden" id="startDate" name="startDate">
+            <input type="hidden" id="endDate" name="endDate">
+            <button type="submit" class="btn btn-dark">Book Now</button>
+        </form>
+    </div> -->
+
+       <div id="calendar" class="col-8 offset-2">
+         <div class="error-message" id="errorMessage">Please select a valid date range.</div>
+         <div id="inlineCalendar"></div> 
+         <p class="total-price">Total Price: ₹<span id="totalPrice">0</span></p>
+         <div class="selected-dates" id="selectedDates"></div> 
+       </div>
+
+       <div class="col-8 offset-2 mb-3 mt-3">
+        <h3>Where you'll be:</h3>
+        <div id="map"></div>
+       </div>
+    
+
+    </div>
+</body>
+
+
+<script src="/js/map.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    const perNightCost = 1000; // Example price per night
+    const totalPriceElement = document.getElementById('totalPrice');
+    const selectedDatesElement = document.getElementById('selectedDates');
+    const errorMessageElement = document.getElementById('errorMessage');
+
+    // Initialize Flatpickr in inline mode
+    const calendar = flatpickr("#inlineCalendar", {
+        mode: "range",
+        minDate: "today",
+        dateFormat: "Y-m-d",
+        inline: true, // This makes the calendar always visible
+        onChange: function(selectedDates) {
+            if (selectedDates.length === 2) {
+                const [startDate, endDate] = selectedDates;
+
+                // Check if the start date is before the end date
+                if (startDate < endDate) {
+                    const totalNights = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+                    const totalPrice = totalNights * perNightCost;
+
+                    // Update the total price
+                    totalPriceElement.textContent = totalPrice.toLocaleString("en-IN");
+
+                    // Display selected dates
+                    selectedDatesElement.textContent = `Start Date: ${startDate.toLocaleDateString()} - End Date: ${endDate.toLocaleDateString()}`;
+                    selectedDatesElement.style.display = 'block'; // Show the selected dates
+                    errorMessageElement.style.display = 'none'; // Hide error message
+                } else {
+                    // Show error message if the range is invalid
+                    errorMessageElement.style.display = 'block';
+                    totalPriceElement.textContent = '0';
+                    selectedDatesElement.style.display = 'none'; // Hide if not both dates are valid
+                }
+            } else {
+                totalPriceElement.textContent = '0';
+                selectedDatesElement.style.display = 'none'; // Hide if not both dates are selected
+                errorMessageElement.style.display = 'none'; // Hide error message
+            }
+        }
+    });
+</script>
+<!-- <script>
+    const perNightCost = listing.price;
+    const calendarElement = document.getElementById('calendar');
+    const startDateInput = document.getElementById('startDate');
+    const endDateInput = document.getElementById('endDate');
+    const totalNightsElement = document.getElementById('totalNights');
+    const totalPriceElement = document.getElementById('totalPrice');
+    console.log('Initializing Flatpickr');
+    const calendar = flatpickr(calendarElement, {
+        mode: "range",
+        minDate: "today",
+        dateFormat: "Y-m-d",
+        onChange: function(selectedDates) {
+            if (selectedDates.length === 2) {
+                const [startDate, endDate] = selectedDates;
+                console.log('Selected dates:', selectedDates);
+                startDateInput.value = startDate.toISOString().split('T')[0];
+                endDateInput.value = endDate.toISOString().split('T')[0];
+
+                const diffTime = Math.abs(endDate - startDate);
+                const totalNights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                totalNightsElement.textContent = totalNights;
+                totalPriceElement.textContent = totalNights * perNightCost;
+            } else {
+                totalNightsElement.textContent = 0;
+                totalPriceElement.textContent = 0;
+            }
+        }
+    });
+
+    calendar.open();
+</script> -->
+
+ 

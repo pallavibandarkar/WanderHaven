@@ -54,10 +54,17 @@ min-height: 100vh;
 .listing-card{
     border: none !important;
     margin-bottom: 2rem;
+    padding: 2px;
+    box-shadow: 0 3px 4px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
+.listing-card button{
+    
 }
 
 .card-img-top{
-    border-radius: 1.2rem !important;
+    border-radius: 1rem !important;
     width: 100% !important;
     object-fit: cover !important;
 }
@@ -68,18 +75,22 @@ min-height: 100vh;
     font-weight: 400 !important;
 }
 
-.listing_links{
-    text-decoration: none;
+.listing-card .listing_links{
+    text-decoration: none !important;
+    color: #fe424d !important;
+    cursor: pointer !important;
+    pointer-events: auto;
+    font-weight: 700;
 }
 /* card effect */
-.card-img-overlay{
-    opacity: 1;
+/* .card-img-overlay{
+
     
 }
 .card-img-overlay:hover{
     opacity: 0.5;
     background-color: white;
-}
+} */
 /* add page */
 .add-btn{
     background-color: #fe424d !important;
@@ -92,7 +103,7 @@ min-height: 100vh;
 }
 /* Show img */
 .show-img{
-    height: 30vh;
+    height: 40vh;
 }
 
 .btns{
@@ -106,5 +117,32 @@ min-height: 100vh;
 /* MAP */
 #map{
     height: 400px;
-    width: 90vh;
+    width: 100%;
 }
+
+/* Calendar */
+#calendar {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    position: relative;
+}
+.selected-dates {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 5px;
+    border-radius: 5px;
+    display: none; 
+}
+#inlineCalendar{
+    max-width: 90%;
+    margin: 20px auto;
+}
+.total-price {
+    margin-top: 20px;
+    font-weight: bold;
+}
+.error-message {
+    color: red;
+    display: none; 
+}
+
