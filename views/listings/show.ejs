@@ -28,7 +28,6 @@
 
 </style>
 <script>
-    const mapToken = "<%= process.env.MAP_TOKEN%>";
     const listing = <%-JSON.stringify(listing) %>;
     const latitude = listing.geometry.coordinates[1]; // Latitude
     const longitude = listing.geometry.coordinates[0]; // Longitude

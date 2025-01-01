@@ -1,6 +1,6 @@
 const Listing = require("../models/listing.js");
 const Review = require("../models/review.js");
-const wrapAsync = require("../utils/wrapAsync.js");
+
 
 module.exports.createReview = async(req,res)=>{
     let {id} = req.params
