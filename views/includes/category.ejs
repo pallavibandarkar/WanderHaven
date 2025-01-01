@@ -1,0 +1,169 @@
+<style>
+#filters{
+    display: flex;
+    flex-wrap: nowrap; 
+    overflow-x: auto; 
+    padding: 1rem;
+    scrollbar-width: thin; 
+    scrollbar-color: #cccccc transparent;
+    margin-bottom: 15px;
+  }
+  .filter{
+    text-align: center;
+    margin-top: 1rem;
+    margin-right: 2rem;
+    opacity: 0.7;
+  }
+  .filter:hover{
+    opacity: 1;
+    cursor: pointer;
+  }
+  .filter p{
+    font-size: 0.8rem;
+  }
+  .tax-info{
+    display: none;
+  }
+  .tax-toggle{
+    border: 1px black solid;
+    border-radius: 1rem;
+    display: flex;
+    flex-shrink: 0;
+    height: 3rem;
+    padding: 1rem;
+    margin-left: 3rem;
+    align-items: center;
+  }
+  .filter a{
+   text-decoration: none;
+   color: black;
+   opacity: 0.7;
+  }
+  .heart h3{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    color: black;
+  }
+  .heart h3:hover{
+    color: #fe424d;
+  }
+  #filters::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  #filters::-webkit-scrollbar-thumb {
+    background-color: #cccccc;
+    border-radius: 4px;
+  }
+
+  #filters::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .listing-card .wishList{
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    z-index: 10;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+  }
+  .wishList.active {
+    color: #fe424d; /* Change to your desired active color */
+  }
+  #inWishList{
+    color: #fe424d;
+  }
+</style>
+<div id="filters">
+    <div class="filter">
+      <a href="http://localhost:8080/listings/category/Trending">
+        <div><i class="fa-solid fa-fire"></i></div>
+        <p>Trending</p>
+      </a>
+    </div>
+    <div class="filter">
+      <a href="http://localhost:8080/listings/category/Rooms">
+        <div><i class="fa-solid fa-bed"></i></div>
+        <p>Rooms</p>
+      </a>
+      
+    </div>
+    <div class="filter">
+      <a href="http://localhost:8080/listings/category/Iconic Cities">
+        <div><i class="fa-solid fa-mountain-city"></i></div>
+        <p>Iconic Cities</p>
+      </a>
+      
+    </div>
+    <div class="filter">
+      <a href="http://localhost:8080/listings/category/Mountain">
+        <div><i class="fa-solid fa-mountain"></i></div>
+        <p>Mountain</p>
+      </a>
+      
+    </div>
+    <div class="filter">
+      <a href="http://localhost:8080/listings/category/Lake">
+        <div><i class="fa-solid fa-water"></i></div>
+        <p>Lake</p>
+      </a>
+      
+    </div>
+    <div class="filter">
+      <a href="http://localhost:8080/listings/category/Camping">
+        <div><i class="fa-solid fa-campground"></i></div>
+        <p>Camping</p>
+      </a>
+      
+    </div>
+    <div class="filter">
+      <a href="http://localhost:8080/listings/category/Castles">
+      <div><i class="fa-brands fa-fort-awesome"></i></div>
+      <p>Castles</p>
+    </a>
+    </div>
+    <div class="filter">
+    <a href="http://localhost:8080/listings/category/Amazing pool">
+      <div><i class="fa-solid fa-person-swimming"></i></div>
+      <p>Amazing pool</p>
+    </a>
+    </div>
+    <div class="filter">
+    <a href="http://localhost:8080/listings/category/farms">
+      <div><i class="fa-solid fa-cow"></i></div>
+      <p>farms</p>
+    </a>
+    </div>
+    <div class="filter">
+    <a href="http://localhost:8080/listings/category/Domes">
+      <div><i class="fa-solid fa-igloo"></i></div>
+      <p>Domes</p>
+    </a>
+    </div>
+    <div class="filter">
+    <a href="http://localhost:8080/listings/category/Boats">
+      <div><i class="fa-solid fa-sailboat"></i></div>
+      <p>Boats</p>
+    </a>
+    </div>
+    <div class="filter">
+    <a href="http://localhost:8080/listings/category/Beach">
+      <div><i class="fa-solid fa-umbrella-beach"></i></div>
+      <p>Beach</p>
+    </a>
+    </div>
+    <div class="tax-toggle">
+      <div class="form-check-reverse form-switch">
+        <input class="form-check-input" 
+        type="checkbox" role="switch" 
+        id="flexSwitchCheckDefault">
+        <label class="form-check-label" for="flexSwitchCheckDefault">
+          Display total after taxes
+        </label>
+      </div>
+    </div>
+</div>

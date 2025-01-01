@@ -1,0 +1,97 @@
+
+<% 
+function formatDate(date) {
+    const d = new Date(date);
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+    return `${day}/${month}/${year}`;
+}
+%>
+
+<style>
+    .listing-card .wishList{
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    z-index: 20;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+  }
+  .wishList.active {
+    color: #fe424d;
+  }
+  #inWishList{
+    color: #fe424d;
+  }
+</style>
+
+<% layout("/layouts/boilerplate")%>
+<body>
+    <h5 class="mt-4"><%=userBookings[0].user.username%> Booking List</h5>
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 g-3 mt-4">
+        <%for(let booking of userBookings){%>
+          
+            <div class="card col listing-card">
+                <%if (wishList.includes(booking.listing._id.toString())){%>
+                    <a class="wishList active" id="inWishList"><i class="fa-solid fa-heart"></i></a>
+                  <%} else {%>
+                    <a class="wishList" href="/listing/<%=booking.listing._id%>/wishlist"><i class="fa-solid fa-heart"></i></a>
+                  <%}%> 
+              <% if (booking.listing.image && booking.listing.image.length > 0) { %>
+                <div  id="listingCarousel<%= booking.listing._id %>" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <% booking.listing.image.forEach((image, index) => { %>
+                            <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                                <img src="<%= image.url %>" class="d-block w-80 listing-img" style="height: 300px;" alt="listing_image">
+                            </div>
+                        <% }) %>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#listingCarousel<%=booking.listing._id %>" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#listingCarousel<%=booking.listing._id %>" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
+            <% } else if (booking.listing.image && booking.listing.image.url) { %>
+                <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing_image">
+            <% } else { %>
+                <img src="path/to/default-image.jpg" class="card-img-top show-img" alt="default_image">
+            <% } %>
+            
+                <div class="card-body">
+                 
+                  <p class="card-text">
+                    <p><b><%=booking.listing.title%></b>
+                    </p>
+                    <p>
+                        <strong>Booking Dates:</strong> 
+                        <%= formatDate(booking.startDate) %> to <%= formatDate(booking.endDate) %>
+                    </p>
+                    <p>
+                        <strong>Total Price:</strong> &#8377;<%= booking.totalPrice.toLocaleString("en-IN") %>
+                    </p>
+                  </p>
+                </div>
+              </div>
+            <%}%>
+    </div>
+    
+</body>
+
+<script>
+    wishListIcons.forEach(icon => {
+    icon.addEventListener("click", (event) => {
+      // Remove active class from all icons
+      wishListIcons.forEach(i => i.classList.remove("active"));
+      
+      // Add active class to the clicked icon
+      event.currentTarget.classList.add("active");
+      console.log("heart clicked");
+    });
+  });
+</script>

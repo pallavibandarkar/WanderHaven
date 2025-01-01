@@ -63,42 +63,42 @@
   .menubar a i{
     font-size: 33px;
   }
+  .menubar a{
+    margin:5px;
+    font-size: 15px !important;
+    opacity: 0.8;
+  }
   .menubar{
-    display: none;
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
     cursor: pointer;
   }
   .navbar-btns-responsive{
     display: flex;
     flex-direction: column;
     padding: 20px;
-    background-color: whitesmoke;
-    border: 1ps solid rgba(0, 0, 0, 0.2);
-    width: 20%;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    width: 15%;
     align-items: center;
     position: fixed;
     top: 70px;
     right: 0;
-    z-index: 100;
+    z-index: 10;
     display: none;
+    opacity: 0; /* Start with opacity 0 */
+    transition: opacity 0.3s ease;
   }
-  .navbar-btns-responsive .close{
-    position: absolute;
-    top: 0;
-    right:0;
-    font-size: 25px;
-    cursor: pointer;
-    text-decoration: none;
-    color: black;
+  .navbar-btns-responsive a{
+    padding-bottom: 5px;
   } 
-
-  @media (max-width:1000px) {
-    .menubar{
-      display: block
-    }
-    .navbar-btns{
-      display: none;
-    }
+  .navbar-btns-responsive a:hover{
+    color: #fe424d !important;
+    border-bottom:2px solid rgba(0, 0, 0, 0.1);
   }
+
   @media (max-width:900px) {
     .navbar-btns-responsive{
       width: 30%;
@@ -154,6 +154,15 @@
     display: none;
   }
   }
+
+  @media (max-width:530px) {
+    .search{
+      display: none;
+    }
+    .Navbar .nav-link{
+      display: block;
+    }
+  }
   @media (max-width:450px) {
     .search input{
      padding: 3px;
@@ -171,7 +180,7 @@
     font-size: 12px;
   }
   .Navbar .nav-link{
-    display: none;
+    display: block;
   }
   .menubar a i{
     font-size: 25px;
@@ -185,11 +194,11 @@
   <div class="Navbar">
     <div class="nav-logo">
       <a class="navbar-brand logo" href="/listings"><i class="fa-regular fa-compass"></i></a>
-      <a class="nav-link" href="/listings">Explore</a>
+      <a class="nav-link" href="/listings"><b>WanderHaven</b></a>
     </div>
     <div class="search">
-      <form>
-        <input type="text" placeholder="Search Destination">
+      <form method="post" action="/listings/search">
+        <input type="text" name="location" placeholder="Search by Location" required>
         <button class="btn search-btn" 
           type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search
         </button>
@@ -197,30 +206,23 @@
     </div>
     <div class="menubar">
       <a><i class="fa-solid fa-bars"></i></a>
+      <a><i class="fa-solid fa-user"></i></a>
     </div>
 
-    <div class="navbar-btns">
-      <a class="nav-link" href="/listings/new">Airbnb your home</a>
-      <% if(!currUser){ %>
-        <a class="nav-link "  href="/signup"><b>Sign Up</b></a>
-        <a class="nav-link" href="/login"><b>Log In</b></a>
-      <% } %>
-      <% if(currUser){%>
-        <a class="nav-link" href="/logout"><b>Log Out</b></a>
-      <% } %>
-      
-    </div>
+
 
   </div>
   <div class="navbar-btns-responsive">
-    <a class="close"><i class="fa-solid fa-xmark"></i></a>
-    <a class="nav-link" href="/listings/new">Airbnb your home</a>
+    <a class="nav-link" href="/listings/new"><b>Airbnb your home</b></a>
     <% if(!currUser){ %>
       <a class="nav-link "  href="/signup"><b>Sign Up</b></a>
       <a class="nav-link" href="/login"><b>Log In</b></a>
     <% } %>
     <% if(currUser){%>
       <a class="nav-link" href="/logout"><b>Log Out</b></a>
+      <a class="nav-link" href="/listing/wishlist" ><b>Wish List</b></a>
+      <a class="nav-link" href="/listing/<%=currUser._id%>/bookings"><b>Booking List</b></a>
+      <a class="nav-link" href="/listings/<%=currUser._id%>/propertyList"><b>Property List</b></a>
     <% } %>
     
   </div>
@@ -229,12 +231,39 @@
 <script>
   let menubar = document.querySelector(".menubar");
   let showBox = document.querySelector(".navbar-btns-responsive");
-  let closeMenu = document.querySelector(".close")
+  let menu = false
+  // menubar.addEventListener("click",()=>{
+  //   if(menu == false){
+  //     showBox.style.display="block"
+  //     menu = true
+  //   }else{
+  //     showBox.style.display = "none"
+  //     menu = false
+  //   }
+  // })
 
-  menubar.addEventListener("click",()=>{
-    showBox.style.display="block"
-  })
-  closeMenu.addEventListener("click",()=>{
-    showBox.style.display = "none"
-  })
+  menubar.addEventListener("click", () => {
+    if (menu == false) {
+      showBox.style.display = "flex"; // Show the menu
+      setTimeout(() => {
+        showBox.style.opacity = "1"; // Fade in effect
+      }, 10); // Small timeout to allow display change to take effect
+      menu = true;
+    } else {
+      showBox.style.opacity = "0"; // Fade out effect
+      setTimeout(() => {
+        showBox.style.display = "none"; // Hide the menu after fading out
+      }, 300); // Match this timeout with the CSS transition duration
+      menu = false;
+    }
+  });
+
+  // menubar.addEventListener("click",()=>{
+  //   if(menu == true){
+  //     showBox.style.display = "none"
+  //     menu = false
+  //   }
+    
+  // })
+  
 </script>

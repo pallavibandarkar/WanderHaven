@@ -1,12 +1,12 @@
 <% layout("/layouts/boilerplate")%>
 <body>
     <div class="row">
-    <div class="col-8 offset-2">
+    <div class="col-10 offset-1">
         <br>
-    <h2>Create a new listing</h2>
+    <h4>Create a new listing</h4>
     <form method="POST" action="/listings" class="needs-validation" enctype="multipart/form-data" novalidate>
         <div class="mb-3">
-            <label for="title" class="form-label">Titel</label>
+            <label for="title" class="form-label">Title</label>
             <input
              name="listing[title]"
               placeholder="Add a catchy title" 
@@ -28,8 +28,8 @@
 
         <div class="mb-3">
             <label for="image" class="form-label">Upload Listing Image</label>
-            <input name="listing[image]"type="file"class="form-control">
-            required
+            <input name="listing[image]"type="file"class="form-control" multiple required>
+
         </div>
         
         <div class="mb-3">
@@ -44,7 +44,7 @@
         </div>
         <div class="row mb-3">
             <div class="mb-3 col-md-4">
-                <label for="location" class="form-label">location</label>
+                <label for="Location" class="form-label">location</label>
                 <input 
                 name="listing[location]"
                 class="form-control" 
@@ -65,9 +65,8 @@
                 <div class="invalid-feedback">Please provide valid country</div>
             </div>
             <div class="row mb-3">
-                <label for="category" class="form-label">Category:</label>
-                <div class=" col-md-8 mt-2">
-                  
+                <div class=" col-md-4 mt-2">
+                    <label for="category" class="form-label">Category:</label>
                    <select name="listing[category]" class="col-md-6 form-select">
                        <option>Trending</option>
                        <option>Rooms</option>
@@ -84,6 +83,60 @@
                        
 
                     </select>
+                </div>
+
+                <div class=" col-md-4 mt-2">
+                    <label for="place" class="form-label">Type of place:</label>
+                    <select name="listing[place]" class="col-md-6 form-select">
+                       <option>An Entire Place</option>
+                       <option>Rooms</option>
+                       <option>Shared Room</option>
+                    </select>
+                </div>
+            </div>
+
+            <hr/>
+            <div class="mb-3 row">
+                <p><b>Some basics about your place</b></p>
+                <div class="col-md-2 mt-2">
+                    <label for="guests" class="form-label">Guests</label>
+                    <input 
+                    name="listing[guests]"
+                    class="form-control" 
+                    placeholder="1, 2, 3"
+                    type="number"
+                    required
+                    >
+                </div>
+                <div class="col-md-2 mt-2">
+                    <label for="bedrooms" class="form-label">Bedrooms</label>
+                    <input 
+                    name="listing[bedrooms]"
+                    class="form-control" 
+                    placeholder="1, 2, 3"
+                    type="number"
+                    required
+                    >
+                </div>
+                <div class="col-md-2 mt-2">
+                    <label for="beds" class="form-label">Beds</label>
+                    <input 
+                    name="listing[beds]"
+                    class="form-control" 
+                    placeholder="1, 2, 3"
+                    type="number"
+                    required
+                    >
+                </div>
+                <div class="col-md-2 mt-2">
+                    <label for="Bathrooms" class="form-label">Bathrooms</label>
+                    <input 
+                    name="listing[bathrooms]"
+                    class="form-control" 
+                    placeholder="1, 2, 3"
+                    type="number"
+                    required
+                    >
                 </div>
             </div>
             

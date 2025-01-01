@@ -1,7 +1,7 @@
 <% layout("/layouts/boilerplate") %>
 <body>
     <div class="row mt-3">
-    <div class="col-8 offset-2">
+    <div class="col-10 offset-1">
     <h2>Edit a listing</h2>
     <form method="POST" 
         action="/listings/<%=listing._id %>?_method=PUT"
@@ -21,14 +21,21 @@
             <label for="description" class="form-label">Description</label>
             <textarea 
             name="listing[description]" 
-            class="form-control" required>
-            <%=listing.description%></textarea>
+            class="form-control" required><%=listing.description%>
+            </textarea>
             <div class="invalid-feedback">Please provide short Description</div>
         </div>
         <div class="mb-3">
-            Oringinal Listing Image:
+            <label>Original Listing Images:</label>
             <br>
-            <img src="<%=originalUrl%>" alt="Listing Image">
+            <% if (listing.image && listing.image.length > 0) { %>
+                <% listing.image.forEach(function(img, index) { %>
+                    <img src="<%= img.url %>" alt="Listing Image" class="img-fluid" style="max-height: 200px; margin-right: 10px;">
+                <% }) %>
+            <% } else { %>
+                <p>No images uploaded yet.</p>
+            <% } %>
+            
         </div>
         <div class="mb-3">
             <label for="image" class="form-label">Upload New Image</label>
@@ -36,6 +43,7 @@
             name="listing[image]"
             class="form-control" 
             type="file"
+            multiple
             >
         </div>
        
@@ -69,10 +77,10 @@
             </div>
 
             <div class="row mb-3">
-                <label for="category" class="form-label">Category:</label>
-                <div class=" col-md-8 mt-2">
-                  
-                   <select name="listing[category]" class="col-md-6 form-select" value ="<%=listing.category%>" required>
+                
+                <div class=" col-md-4 mt-2">
+                    <label for="category" class="form-label">Category:</label>
+                    <select name="listing[category]" class="col-md-6 form-select" value ="<%=listing.category%>" required>
                     <option value="Trending" <%= listing.category === 'Trending' ? 'selected' : '' %>>Trending</option>
                     <option value="Rooms" <%= listing.category === 'Rooms' ? 'selected' : '' %>>Rooms</option>
                     <option value="Iconic Cities" <%= listing.category === 'Iconic Cities' ? 'selected' : '' %>>Iconic Cities</option>
@@ -87,7 +95,66 @@
                     <option value="Beach" <%= listing.category === 'Beach' ? 'selected' : '' %>>Beach</option>
                     </select>
                 </div>
+
+                <div class=" col-md-4 mt-2">
+                    <label for="place" class="form-label">Type of place:</label>
+                    <select name="listing[place]" class="col-md-6 form-select" value="<%=listing.place%>">
+                       <option value="An Entire Place" <%= listing.place === 'Trending' ? 'selected' : '' %>>An Entire Place</option>
+                       <option value="Rooms" <%= listing.place === 'Rooms' ? 'selected' : '' %>>Rooms</option>
+                       <option value="Shared Room" <%= listing.place === 'Shared Room' ? 'selected' : '' %>>Shared Room</option>
+                    </select>
+                </div>
             </div>
+
+            <div class="mb-3 row">
+                <p><b>Some basics about your place</b></p>
+                <div class="col-md-2 mt-2">
+                    <label for="guests" class="form-label">Guests</label>
+                    <input 
+                    name="listing[guests]"
+                    class="form-control" 
+                    placeholder="1, 2, 3"
+                    type="number"
+                    value="<%=listing.guests%>"
+                    required
+                    >
+                </div>
+                <div class="col-md-2 mt-2">
+                    <label for="bedrooms" class="form-label">Bedrooms</label>
+                    <input 
+                    name="listing[bedrooms]"
+                    class="form-control" 
+                    placeholder="1, 2, 3"
+                    type="number"
+                    value="<%=listing.bedrooms%>"
+                    required
+                    >
+                </div>
+                <div class="col-md-2 mt-2">
+                    <label for="beds" class="form-label">Beds</label>
+                    <input 
+                    name="listing[beds]"
+                    class="form-control" 
+                    placeholder="1, 2, 3"
+                    type="number"
+                    value="<%=listing.beds%>"
+                    required
+                    >
+                </div>
+                <div class="col-md-2 mt-2">
+                    <label for="Bathrooms" class="form-label">Bathrooms</label>
+                    <input 
+                    name="listing[bathrooms]"
+                    class="form-control" 
+                    placeholder="1, 2, 3"
+                    type="number"
+                    value="<%=listing.bathrooms%>"
+                    required
+                    >
+                </div>
+            </div>
+            
+
             
         </div>
         

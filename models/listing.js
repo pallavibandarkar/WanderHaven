@@ -9,12 +9,15 @@ const listingSchema = new Schema({
     },
     description:{
         type:String,
-        
+        required:true,
     },
-    image:{
+
+    image:[
+        {
         url:String,
         filename:String,
-    },
+        }
+    ],
     price:{
         type:Number
     },
@@ -51,7 +54,24 @@ const listingSchema = new Schema({
 
        ,"Beach"],
        required : true
-    }
+    },
+    place:{
+        type:String,
+        enum:["An Entire Place","Rooms","Shared Room"],
+    },
+    guests:{
+        type:Number
+    },
+    bedrooms:{
+        type:Number
+    },
+    beds:{
+        type:Number
+    },
+    bathrooms:{
+        type:Number
+    },
+    
 })
 
 listingSchema.post("findOneAndDelete", async(listing)=>{

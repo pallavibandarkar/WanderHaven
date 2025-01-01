@@ -6,39 +6,99 @@
     border: 1px black solid;
     border-radius: 1rem;
     display: flex;
-    
     height: 3rem;
     padding: 1rem;
-    margin-left: 3rem;
     align-items: center;
-    /* justify-content: center; */
-    
+    width: 20%;
+    margin-top: 25px;
+  }
+  .listing-card .wishList{
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    z-index: 10;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+  }
+  .wishList.active {
+    color: #fe424d; /* Change to your desired active color */
+  }
+  #inWishList{
+    color: #fe424d;
+  }
+  @media (max-width:1000px) {
+    .tax-toggle{
+      width: 40%;
+    }
+  }
+  @media (max-width:770px) {
+    .tax-toggle{
+      width: 55%;
+    }
+  }
+  @media (max-width:770px) {
+    .tax-toggle{
+      width: 85%;
+    }
   }
 </style>
 <% layout("/layouts/boilerplate") %>
 <body>
-    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
-        <%for(let listing of categoryListing){%>
-          <a href="/listings/<%=listing._id%>" class="listing_links">
-            <div class="card col listing-card">
-                <img src="<%=listing.image.url%>"
-                 class="card-img-top" alt="Listing_image" style="height:20rem;"/>
-                 <div class="card-img-overlay"></div>
-                <div class="card-body">
-                  <p class="card-text">
-                    <p><b><%=listing.title%></b>
-                    <br>
-                    &#8377;<%=listing.price.toLocaleString("en-IN")%> /night
-                    <i class="tax-info">&nbsp;&nbsp;+18%GST</i>
-                    </p>
-                  </p>
-                </div>
-              </div>
-            </a>
-            <%}%>
+  <div class="tax-toggle">
+    <div class="form-check-reverse form-switch">
+      <input class="form-check-input" 
+      type="checkbox" role="switch" 
+      id="flexSwitchCheckDefault">
+      <label class="form-check-label" for="flexSwitchCheckDefault">
+        Display total after taxes
+      </label>
     </div>
-    
-   
+  </div>
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 g-3 mt-4">
+    <%for(let listing of listings){%>
+      
+        <div class="card col listing-card">
+          <% if (listing.image && listing.image.length > 0) { %>
+            <div  id="listingCarousel<%= listing._id %>" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <% listing.image.forEach((image, index) => { %>
+                        <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                            <img src="<%= image.url %>" class="d-block w-90 listing-img" style="height: 350px;" alt="listing_image">
+                        </div>
+                    <% }) %>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#listingCarousel<%= listing._id %>" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#listingCarousel<%= listing._id %>" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+        <% } else if (listing.image && listing.image.url) { %>
+            <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing_image">
+        <% } else { %>
+            <img src="path/to/default-image.jpg" class="card-img-top show-img" alt="default_image">
+        <% } %>
+        
+            <!-- <img src="<%=listing.image.url%>"
+            class="card-img-top" alt="Listing_image" style="height:20rem;"/> -->
+            <div class="card-body">
+             
+              <p class="card-text">
+                <p><b><%=listing.title%></b>
+                <br>
+                &#8377;<%=listing.price.toLocaleString("en-IN")%> /night
+                <i class="tax-info">&nbsp;&nbsp;+18%GST</i>
+                </p>
+              </p>
+            </div>
+            <a href="http://localhost:8080/listings/<%=listing._id%>" class="listing_links">View Details</a>
+          </div>
+        <%}%>
+</div>
 </body>
 
 <script>

@@ -1,0 +1,308 @@
+<% layout("/layouts/boilerplate")%>
+<style>
+    .categories{
+        display: grid;
+        /* grid-template-columns:repeat(9,1fr); */
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 20px; 
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        
+    }
+    
+    @media (max-width) {
+        .categories{
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 10px; 
+        }
+    }
+    .category{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        margin: 10px;
+        padding: 10px;
+        border:3px solid #fe424d;
+        border-radius: 10px;
+    }
+    
+    .place{
+        display: flex;
+        justify-content: space-between;
+        width: 35%;
+        padding: 10px;
+        border-radius: 15px;
+        align-items: center;
+        border: 3px solid #fe424d;
+        margin-bottom: 15px;
+    }
+    .place-type{
+        display: flex;
+        flex-direction: column;
+    }
+    .address-info{
+        display: flex;
+    }
+    .address input{
+        padding: 7px;
+        border-radius: 10px;
+        margin-top: 4px;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .address{
+        margin-left: 10px;
+    }
+</style>
+<body>
+    <div>
+        <h1>Tell Us About your place</h1>
+        <hr/>
+        <h5>Which of these Categories best describes your place</h5>
+        <div class="newForm">
+            <form>
+                <div class="categories">
+                    <div class="category">                       
+                        <b>Rooms</b>
+                        <i class="fa-solid fa-fire"></i>
+                        <input 
+                        type="hidden"
+                        type="text" 
+                        name="listing[name]"
+                        >
+                    </div>
+                    <div class="category">                       
+                        <b>Trending</b>
+                        <i class="fa-solid fa-fire"></i>
+                        <input 
+                        type="hidden"
+                        type="text" 
+                        name="listing[name]"
+                        >
+                    </div>
+                    <div class="category">                       
+                        <b>Iconic Cities</b>
+                        <i class="fa-solid fa-mountain-city"></i>
+                        <input 
+                        type="hidden"
+                        type="text" 
+                        name="listing[name]"
+                        >
+                    </div>
+                    <div class="category">                       
+                        <b>Mountain</b>
+                        <i class="fa-solid fa-mountain"></i>
+                        <input 
+                        type="hidden"
+                        type="text" 
+                        name="listing[name]"
+                        >
+                    </div>
+                    <div class="category">                       
+                        <b>Lake</b>
+                        <i class="fa-solid fa-water"></i>
+                        <input 
+                        type="hidden"
+                        type="text" 
+                        name="listing[name]"
+                        >
+                    </div>
+                    <div class="category">                       
+                        <b>Camping</b>
+                        <i class="fa-solid fa-campground"></i>
+                        <input 
+                        type="hidden"
+                        type="text" 
+                        name="listing[name]"
+                        >
+                    </div>
+                    <div class="category">                       
+                        <b>Castles</b>
+                        <i class="fa-brands fa-fort-awesome"></i>
+                        <input 
+                        type="hidden"
+                        type="text" 
+                        name="listing[name]"
+                        >
+                    </div>
+                    <div class="category">                       
+                        <b>Amazing Pools</b>
+                        <i class="fa-solid fa-person-swimming"></i>
+                        <input 
+                        type="hidden"
+                        type="text" 
+                        name="listing[name]"
+                        >
+                    </div>
+                </div>
+
+                <br/>
+                <hr/>
+
+                <div class="guest mt-3">
+                    <h4>What type of place guest will have?</h4>
+                    <br/>
+                    <div class="place-type">
+                        <div class="place">
+                            <div class="place-info">
+                                <b>An Entire place</b>
+                                <p>Guests have the whole place to themselves</p>
+                            </div>
+                            <div class="place-icon">
+                                <i class="fa-solid fa-house"></i>
+                            </div>
+                        </div>
+
+                        <div class="place">
+                            <div class="place-info">
+                                <b>An Entire place</b>
+                                <p>Guests have the whole place to themselves</p>
+                            </div>
+                            <div class="place-icon">
+                                <i class="fa-solid fa-house"></i>
+                            </div>
+                        </div>
+
+                        <div class="place">
+                            <div class="place-info">
+                                <b>An Entire place</b>
+                                <p>Guests have the whole place to themselves</p>
+                            </div>
+                            <div class="place-icon">
+                                <i class="fa-solid fa-house"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr/>
+                <h4>Where's your place located?</h4>
+                <div class="address-info">
+                    
+                    <div class="address-content">
+                        <div class="address">
+                            <label><b>Street Address</b></label><br/>
+                            <input type="text" name="listing[address]" placeholder="Street Address"/>
+                        </div>
+                        <div class="address">
+                            <label><b>City</b></label><br/>
+                            <input type="text" name="listing[address]" placeholder="City"/>
+                        </div>
+                    </div>
+                    <div class="address-content">
+                        <div class="address">
+                            <label><b>State</b></label><br/>
+                            <input type="text" name="listing[address]" placeholder="State"/>
+                        </div>
+                        <div class="address">
+                            <label><b>Country</b></label><br/>
+                            <input type="text" name="listing[address]" placeholder="Country"/>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <hr/>
+                <div class="basic-info mb-4">
+                    <h5>Share some basics about your place</h5>
+                    <div class="basic-utilities">
+                        <button class="btn btn-dark mx-2">Guests &nbsp;&nbsp;<i class="fa-solid fa-plus"></i>&nbsp;&nbsp; 1 &nbsp;&nbsp;<i class="fa-solid fa-minus"></i></button>
+                        <button class="btn btn-dark mx-2">Guests &nbsp;&nbsp;<i class="fa-solid fa-plus"></i>&nbsp;&nbsp; 1 &nbsp;&nbsp;<i class="fa-solid fa-minus"></i></button>
+                        <button class="btn btn-dark mx-2">Guests &nbsp;&nbsp;<i class="fa-solid fa-plus"></i>&nbsp;&nbsp; 1 &nbsp;&nbsp;<i class="fa-solid fa-minus"></i></button>
+                        <button class="btn btn-dark ">Guests &nbsp;&nbsp;<i class="fa-solid fa-plus"></i>&nbsp;&nbsp; 1 &nbsp;&nbsp;<i class="fa-solid fa-minus"></i></button>
+                    </div>
+                </div>
+
+                <hr/>
+                <h4>Tell guest what place has to offer</h4>
+                <!-- <div class="facilities">
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Bathtub"> Bathtub
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Personal Care Products"> Personal Care Products
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Outdoor Shower"> Outdoor Shower
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Washer"> Washer
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Dryer"> Dryer
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Hangers"> Hangers
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Iron"> Iron
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="TV"> TV
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Dedicated Workspace"> Dedicated Workspace
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Air Conditioning"> Air Conditioning
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Heating"> Heating
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Security Cameras"> Security Cameras
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Fire Extinguisher"> Fire Extinguisher
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="First Aid"> First Aid
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Wifi"> Wifi
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Cooking Set"> Cooking Set
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Refrigerator"> Refrigerator
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Microwave"> Microwave
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Stove"> Stove
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Barbecue Grill"> Barbecue Grill
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Outdoor Dining Area"> Outdoor Dining Area
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Balcony"> Balcony
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Camp Fire"> Camp Fire
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Garden"> Garden
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Free Parking"> Free Parking
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Self check-in"> Self check-in
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="listing[facilities]" value="Pet Allowed"> Pet Allowed
+                    </label><br>
+
+                </div>
+                 -->
+            </form>
+        </div>
+    </div>
+</body>

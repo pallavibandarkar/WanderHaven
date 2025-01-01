@@ -13,11 +13,13 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
+const MongoStore = require('connect-mongo');
 
 
 const listingRouter = require("./routes/listings.js");
 const reviewRouter = require("./routes/reviews.js");
 const userRouter = require("./routes/user.js");
+const bookingRouter = require("./routes/booking.js")
 
 
 const dbUrl = process.env.ATLAS_DBURL;
@@ -46,16 +48,18 @@ const sessionOptions = {
     secret : process.env.SECRET,
     resave : false,
     saveUninitialized : true,
+    store: MongoStore.create({
+        mongoUrl: process.env.ATLAS_DBURL, 
+        ttl: 7 * 24 * 60 * 60, 
+    }),
     cookie:{
-        expires:Date.now + 7 * 24 * 60 * 60 * 1000,
-        maxAge : 7 * 24 * 60 * 60 * 1000,
-        httpOnly : true,
+        expires:Date.now()+7*24*60*60*1000,
+        maxAge:7*24*60*60*1000,
+        httpOnly:true,
+        SameSite:'lax'
     }
 }
-// app.get("/",(req,res)=>{
-//     res.send("Root route is working!!!");
-//     console.log("root route is working");
-// })
+
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -76,20 +80,12 @@ app.use((req,res,next)=>{
     next();
 })
 
-// app.get("/demouser", async (req,res)=>{
-//     let fakeUser = new User ({
-//         email:"student@gmail.com",
-//         username:"pallaviB"
-//     });
-//     let registered = await User.register(fakeUser,"helloworld");
-//     console.log(registered);
-//     res.send(registered);
-// });
 
 
 app.use("/listings",listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/",userRouter);
+app.use("/listing/:id",bookingRouter);
 
 app.all("*",(req,res,next)=>{
     next(new ExpressError(404,"Page not found!!"))
@@ -101,6 +97,8 @@ app.use((err,req,res,next)=>{
     console.log(err)
     res.status(statusCode).render("error.ejs",{message});
 })
+
+
 
 app.listen(8080,()=>{
     console.log("app is listening on port 8080!!");

@@ -1,0 +1,62 @@
+<% layout("/layouts/boilerplate")%>
+<style>
+    .wishLink{
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
+<body>
+    <h5 class="mt-4"><%=getuser.username%> Wish List</h5>
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 g-3 mt-2">
+        <%for(let wish of getuser.wishList){%>
+          
+            <div class="card col listing-card">
+              <% if (wish.image && wish.image.length > 0) { %>
+                
+                <div  id="wishCarousel<%=wish._id %>" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <% wish.image.forEach((image, index) => { %>
+                            <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                                <img src="<%= image.url %>" class="d-block w-100 listing-img" style="height: 350px;" alt="listing_image">
+                            </div>
+                        <% }) %>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#wishCarousel<%= wish._id %>" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#wishCarousel<%=wish._id %>" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
+            <% } else if (wish.image && wish.image.url) { %>
+                <img src="<%=wish.image.url %>" class="card-img-top show-img" alt="listing_image">
+            <% } else { %>
+                <img src="path/to/default-image.jpg" class="card-img-top show-img" alt="default_image">
+            <% } %>
+            
+                <div class="card-body">
+                 
+                  <p class="card-text">
+                    <p><b><%=wish.title%></b>
+                    <br>
+                    &#8377;<%=wish.price.toLocaleString("en-IN")%> /night
+                    </p>
+                  </p>
+                </div>
+                <div class="wishLink">
+                    <a href="http://localhost:8080/listings/<%=wish._id%>" class="listing_links">
+                        View Details
+                    </a>
+                    <a href="http://localhost:8080/listings/<%=wish._id%>/remove" class="listing_links">
+                        Remove From Wishlist
+                    </a>
+                </div>
+    
+              </div>
+
+            <%}%>
+    </div>
+    
+</body>
