@@ -210,6 +210,14 @@ module.exports.categoryListing = async(req,res)=>{
     let {category} = req.params;
     console.log("category:",category);
     let listings = await Listing.find({category : category});
-    console.log(listings);
-    res.render("listings/category.ejs",{listings});
+
+    let wishList = [];
+
+    if (req.isAuthenticated()) {
+        const userData = await User.findById(req.user._id);
+        if (userData) {
+            wishList = userData.wishList.map(listing => listing.toString());
+        }
+    }
+    res.render("listings/category.ejs",{listings,wishList});
 }

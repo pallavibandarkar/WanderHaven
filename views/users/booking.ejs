@@ -32,8 +32,7 @@ function formatDate(date) {
     <h5 class="mt-4"><%=userBookings[0].user.username%> Booking List</h5>
     <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 g-3 mt-4">
         <%for(let booking of userBookings){%>
-          
-            <div class="card col listing-card">
+          <div class="card col listing-card">
                 <%if (wishList.includes(booking.listing._id.toString())){%>
                     <a class="wishList active" id="inWishList"><i class="fa-solid fa-heart"></i></a>
                   <%} else {%>

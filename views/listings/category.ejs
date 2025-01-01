@@ -16,7 +16,7 @@
     position: absolute;
     top: 10px;
     right: 25px;
-    z-index: 10;
+    z-index: 1;
     color: white;
     font-size: 30px;
     cursor: pointer;
@@ -59,6 +59,11 @@
     <%for(let listing of listings){%>
       
         <div class="card col listing-card">
+          <%if (wishList.includes(listing._id.toString())){%>
+            <a class="wishList active" id="inWishList"><i class="fa-solid fa-heart"></i></a>
+          <%} else {%>
+            <a class="wishList" href="/listing/<%=listing._id%>/wishlist"><i class="fa-solid fa-heart"></i></a>
+          <%}%> 
           <% if (listing.image && listing.image.length > 0) { %>
             <div  id="listingCarousel<%= listing._id %>" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
@@ -116,5 +121,17 @@
     });
     
   </script>
+  <script>
+    wishListIcons.forEach(icon => {
+    icon.addEventListener("click", (event) => {
+      // Remove active class from all icons
+      wishListIcons.forEach(i => i.classList.remove("active"));
+      
+      // Add active class to the clicked icon
+      event.currentTarget.classList.add("active");
+      console.log("heart clicked");
+    });
+  });
+</script>
   
   
