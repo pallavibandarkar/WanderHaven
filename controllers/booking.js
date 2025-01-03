@@ -12,13 +12,13 @@ module.exports.bookAplace = async(req,res)=>{
 
     if(!listing){
         req.flash("error","Listing does not exit")
-        res.redirect("/listings")
+        return res.redirect("/listings")
     }
 
     const userId = req.user._id;
     if(!req.user){
         req.flash("error","You must be logged to book!!")
-        res.redirect("/login")
+        return res.redirect("/login")
     }
 
     const booking = new Booking({
@@ -58,7 +58,7 @@ module.exports.cancelRoute = async(req,res)=>{
     const booking = await Booking.findById(id);
     if(!booking){
         req.flash("error","Booking does not exist")
-        res.redirect("/listings")
+        return res.redirect("/listings")
     }
     booking.status = "canceled"
     const result = await booking.save()
@@ -71,7 +71,7 @@ module.exports.confirmRoute = async(req,res)=>{
     const booking = await Booking.findById(id);
     if(!booking){
         req.flash("error","Booking does not exist")
-        res.redirect("/listings")
+        return res.redirect("/listings")
     }
     booking.status = "confirmed"
     const result = await booking.save()

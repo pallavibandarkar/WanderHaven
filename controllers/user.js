@@ -73,7 +73,7 @@ module.exports.addTowishList = async (req, res) => {
         await userData.save();
 
         req.flash("success","Added to wishlist");
-        return res.redirect("/listing/wishlist");
+        res.redirect("/listing/wishlist");
     } catch (error) {
         res.redirect("error.ejs",{ message: "An error occurred while adding to wishlist" });
     }
@@ -115,7 +115,7 @@ module.exports.getPropertyList = async(req,res)=>{
 
         const properties = await Listing.find({owner:_id}).populate('owner')
         if(properties.length === 0){
-            res.render("error.ejs",{message:"No Properties Found"})
+            return res.render("error.ejs",{message:"No Properties Found"})
         }
 
         let wishList = [];
