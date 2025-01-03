@@ -178,7 +178,6 @@ module.exports.search = async(req,res)=>{
         const userData = await User.findById(req.user._id);
         if (userData) {
             wishList = userData.wishList.map(listing => listing.toString());
-            console.log(wishList)
         }
     }
     const allListings = await Listing.find({location:location})
