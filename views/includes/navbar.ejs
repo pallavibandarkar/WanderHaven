@@ -93,9 +93,12 @@
   }
   .navbar-btns-responsive a{
     padding-bottom: 5px;
+    font-size: 13px;
+    transition: ease-in 0.3s;
   } 
   .navbar-btns-responsive a:hover{
     color: #fe424d !important;
+    font-size: 15px;
     border-bottom:2px solid rgba(0, 0, 0, 0.1);
   }
 
@@ -219,10 +222,11 @@
       <a class="nav-link" href="/login"><b>Log In</b></a>
     <% } %>
     <% if(currUser){%>
+      <a class="nav-link" href="/listing/<%=currUser._id%>/bookings"><b>Trip List</b></a>
+      <a class="nav-link" href="/listing/wishlist" ><b>Wish list</b></a>
+      <a class="nav-link" href="/listings/<%=currUser._id%>/propertyList"><b>Your Properties</b></a>
+      <a class="nav-link" href="/listings/reservations/<%=currUser._id %>"><b>Manage Reservations</b></a>
       <a class="nav-link" href="/logout"><b>Log Out</b></a>
-      <a class="nav-link" href="/listing/wishlist" ><b>Wish List</b></a>
-      <a class="nav-link" href="/listing/<%=currUser._id%>/bookings"><b>Booking List</b></a>
-      <a class="nav-link" href="/listings/<%=currUser._id%>/propertyList"><b>Property List</b></a>
     <% } %>
     
   </div>

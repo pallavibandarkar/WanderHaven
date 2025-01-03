@@ -1,0 +1,115 @@
+<% 
+function formatDate(date) {
+    const d = new Date(date);
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+    return `${day}/${month}/${year}`;
+}
+%>
+<% layout("/layouts/boilerplate")%>
+<style>
+    .reservation{
+        margin-bottom: 20px;
+        padding: 10px;
+    }
+
+    .reservation h4{
+        margin: 0;
+        padding: 0;
+    }
+
+    .booking{
+        padding-top: 5px;
+        border-bottom: 1px solid #cccc;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        border-bottom: 1px solid #cccc;
+        margin-bottom: 15px;
+    }
+    
+    .booking p{
+        margin: 0;
+        margin-bottom: 5px;
+    }
+    .reservation-btns{
+        display: flex;
+        justify-content: space-between;
+    }
+    #cancel button{
+        background-color: #fe424d;
+        color: white;
+        border: none;
+    }
+    #confirm button{
+        color: white;
+        
+    }
+</style>
+
+<body>
+    <!-- <h4 class="reservation-header">Reservation Requests</h4> -->
+    <div class="row reservation">
+        <h2 class="mb-4">Manage Reservations</h2>
+        <%for(let reservation of reservations){%>
+            <h4><%=reservation.bookings[0].listing.title%></h4>
+            <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 booking">
+            <%for(let booking of reservation.bookings){%>
+            <div class="card col listing-card">
+              <% if (booking.listing.image && booking.listing.image.length > 0) { %>
+                <div  id="listingCarousel<%=booking._id%>" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <%booking.listing.image.forEach((image, index) => { %>
+                            <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                                <img src="<%= image.url %>" class="d-block w-90 listing-img" style="height: 250px;" alt="listing_image">
+                            </div>
+                        <% }) %>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#listingCarousel<%=booking._id %>" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#listingCarousel<%=booking._id %>" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
+            <% } else if (booking.listing.image && booking.listing.image.url) { %>
+                <img src="<%=booking.listing.image.url %>" class="card-img-top show-img" alt="listing_image">
+            <% } else { %>
+                <img src="path/to/default-image.jpg" class="card-img-top show-img" alt="default_image">
+            <% } %>
+            
+                <div class="card-body">
+                 
+                  <p class="card-text">
+                    <p><strong>User</strong> : <%= booking.user.username%></p>
+                    <p><strong>Email</strong> : <%= booking.user.email%></p>
+                    <p>
+                        <strong>Booking Dates:</strong> 
+                        <%= formatDate(booking.startDate) %> to <%= formatDate(booking.endDate) %>
+                    </p>
+                    <p>
+                        <strong>Total Price</strong> :  &#8377;<%=booking.totalPrice.toLocaleString("en-IN")%> /night
+                    </p>
+                  </p>
+                  <%if(booking.status === "pending") {%>  
+                    <div class="reservation-btns mt-3">
+                        <a href="/listing/<%=booking._id%>/cancel" id="cancel"><button class="btn">Cancel</button></a>
+                        <a href="/listing/<%=booking._id%>/confirm" id="confirm"><button class="btn btn-success">Confirm</button></a>
+                      </div>
+                  <% } else if(booking.status === "confirmed") {%>
+                      <button id="reserved"class="btn btn-primary">Reserved</button>
+                    <%} else{%>
+                        <a id="cancel"><button class="btn">Rejected</button></a>
+                    <%} %> 
+                  
+                </div>
+              </div>
+              <% }%>
+            </div>
+            <%}%>
+          
+    </div>
+</body>

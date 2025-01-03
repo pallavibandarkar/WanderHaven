@@ -5,7 +5,8 @@ const Review = require("./models/review");
 const {listingSchema}=require("./schema.js");
 const ExpressError = require("./utils/ExpressError.js");
 const {reviewSchema}=require("./schema.js");
-const {bookingSchema} = require("./schema.js")
+const {bookingSchema} = require("./schema.js");
+const Booking = require("./models/booking.js");
 
 module.exports.isloggedIn = (req,res,next)=>{
     if(!req.isAuthenticated()){
@@ -28,7 +29,7 @@ module.exports.isloggedInToBook = (req,res,next)=>{
         //redirect URL
         req.session.redirectUrl = `/listings/${id}`;
         console.log("OrignalURL" ,req.session.redirectUrl);
-        req.flash("error","You must be logged in to create new listing");
+        req.flash("error","You must be logged in to Book");
         return res.redirect("/login");
     }
     next();
@@ -110,3 +111,21 @@ module.exports.isWishList = async (req, res, next) => {
         res.status(500).send({ success: false, msg: "Internal server error" });
     }
 };
+
+module.exports.propertyOwner = async(req,res,next)=>{
+    const booking = await Booking.findById(req.params.id);
+        if (!booking) {
+            return res.status(404).send("Booking not found");
+        }
+
+        const listing = await Listing.findById(booking.listing);
+        if (!listing) {
+            return res.status(404).send("Listing not found");
+        }
+
+        if(listing.owner.equals(req.user._id)){
+            next();
+        }
+        
+}
+

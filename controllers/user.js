@@ -122,7 +122,7 @@ module.exports.getPropertyList = async(req,res)=>{
 
         const properties = await Listing.find({owner:_id}).populate('owner')
         if(properties.length === 0){
-            res.render("error.ejs","No Properties Found")
+            res.render("error.ejs",{message:"No Properties Found"})
         }
 
         let wishList = [];

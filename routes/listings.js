@@ -7,7 +7,8 @@ const {isloggedIn,isOwner,listingValidation} = require("../middleware.js");
 
 const listingController = require("../controllers/listings.js")
 const multer  = require('multer')
-const { storage } = require("../cloudconfig.js")
+const { storage } = require("../cloudconfig.js");
+const Booking = require("../models/booking.js");
 const upload = multer({ storage })
 // .post(upload.single('listing[image]'), function (req, res, next) {
 //     res.send(req.file);
@@ -42,5 +43,7 @@ router.get("/:id/edit",
 );
 
 router.post("/search",wrapAsync(listingController.search))
+
+router.get("/reservations/:id",isloggedIn,wrapAsync(listingController.reservations))
 
 module.exports = router;

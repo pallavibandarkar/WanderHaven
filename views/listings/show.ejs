@@ -21,9 +21,21 @@
         justify-content: space-between;
     }
     .bookNow{
-        background-color: #fe424d;
+        background-color: #fe424d !important;
         border: none;
-        color: white;
+        font-weight: 600;
+        color: white !important;
+        padding: 8px !important;
+        transition: 0.3s ease-in;
+    }
+    .bookNow:hover{
+        padding: 10px !important;
+    }
+    
+    @media (max-width:400px) {
+        .show-img{
+            height: 280px !important;
+        }
     }
 
 </style>
@@ -50,7 +62,7 @@
                     <div class="carousel-inner">
                         <% listing.image.forEach((image, index) => { %>
                             <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
-                                <img src="<%= image.url %>" class="d-block w-100 show-img" style="height: 400px;" alt="listing_image">
+                               <img src="<%= image.url %>" class="d-block w-100 show-img" style="height: 400px;" alt="listing_image">
                             </div>
                         <% }) %>
                     </div>
@@ -73,7 +85,7 @@
                     <b><i><%=listing.owner.username %></i></b>
                 </p>
                 <p class="card-text"><%=listing.description %></p>
-                <p><%=listing.guests%> guests - <%=listing.bedrooms%>bedrooms - <%=listing.beds%> beds - <%=listing.bathrooms%> bathrooms</p>
+                <p><%=listing.guests%> guests - <%=listing.bedrooms%> bedrooms - <%=listing.beds%> beds - <%=listing.bathrooms%> bathrooms</p>
                 <p class="card-text">
                     &#8377;<%=listing.price.toLocaleString("en-IN")%>/night
                 </p>
@@ -102,7 +114,6 @@
 
         <br/>
 
-        
         <div id="calendar" class="col-12 col-md-8 offset-md-2">
             <hr/>
             <h5>How long do you want to stay?</h5>
@@ -118,12 +129,10 @@
                 <p class="total-price">&nbsp;&nbsp;Total Price: ₹<span id="totalPrice">0</span></p>
                 <div class="selected-dates mb-3" id="selectedStartDate"></div> 
                 <div class="selected-dates mb-3" id="selectedEndDate"></div> 
-                <button class="btn btn-dark mt-3 bookNow" type="submit">Book Now</button>
+                <button class="btn mt-3 bookNow" type="submit">Check Availability</button>
             </form>
-    
-            
         </div>
-
+      
         <div class="col-12 col-md-8 offset-md-2 mb-3 mt-3">
             <hr>
             <% if(currUser ) { %>
@@ -168,9 +177,11 @@
                         <p class="starability-result card-text mb-3 mt-3" data-rating="<%=review.rating%>"></p>
                         <p class="card-text"><%=review.comment%></p>
                     </div>
+                    <% if(currUser  && review.author._id.equals(currUser._id)){ %>
                     <form class="mb-3 mt-3" method="POST" action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE">
                         <button class="btn btn-dark btn-sm">Delete</button>
                     </form>
+                    <%}%>
                 </div>
                 <% } %>
             </div>

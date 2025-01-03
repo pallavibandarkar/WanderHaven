@@ -29,7 +29,7 @@ function formatDate(date) {
 
 <% layout("/layouts/boilerplate")%>
 <body>
-    <h5 class="mt-4"><%=userBookings[0].user.username%> Booking List</h5>
+    <h5 class="mt-4">Bookings for  <%=userBookings[0].user.username%></h5>
     <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 g-3 mt-4">
         <%for(let booking of userBookings){%>
           <div class="card col listing-card">
@@ -74,6 +74,13 @@ function formatDate(date) {
                     <p>
                         <strong>Total Price:</strong> &#8377;<%= booking.totalPrice.toLocaleString("en-IN") %>
                     </p>
+                    <%if(booking.status === "confirmed"){%>
+                      <p type="button" class="btn btn-primary"><strong><%=booking.status %></strong></p>
+                    <%} else if(booking.status === "pending"){%>
+                      <p type="button" class="btn btn-dark"><strong><%=booking.status %></strong></p>
+                    <% }else{%> 
+                      <p type="button" class="btn btn-danger"><strong><%=booking.status %></strong></p>
+                    <%} %>
                   </p>
                 </div>
               </div>

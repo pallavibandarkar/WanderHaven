@@ -19,7 +19,8 @@ const MongoStore = require('connect-mongo');
 const listingRouter = require("./routes/listings.js");
 const reviewRouter = require("./routes/reviews.js");
 const userRouter = require("./routes/user.js");
-const bookingRouter = require("./routes/booking.js")
+const bookingRouter = require("./routes/booking.js");
+const Booking = require('./models/booking.js');
 
 
 const dbUrl = process.env.ATLAS_DBURL;
@@ -86,6 +87,7 @@ app.use("/listings",listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/",userRouter);
 app.use("/listing/:id",bookingRouter);
+
 
 
 app.all("*",(req,res,next)=>{

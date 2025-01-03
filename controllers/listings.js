@@ -1,4 +1,5 @@
 const Listing=require("../models/listing.js");
+const Booking=require("../models/booking.js")
 const axios = require('axios');
 const Review = require("../models/review.js");
 const cloudinary = require('cloudinary').v2;
@@ -196,10 +197,9 @@ module.exports.search = async(req,res)=>{
     const allListings = await Listing.find({location:location})
     console.log(allListings)
     if(allListings.length === 0){
-        // req.flash("error","No Search Found")
         return res.render("error.ejs",{message:"No Search Found"})
     }
-
+    req.flash("success","Search location listing found")
     res.render("listings/index.ejs",{allListings,wishList})
 }
 
@@ -217,4 +217,22 @@ module.exports.categoryListing = async(req,res)=>{
         }
     }
     res.render("listings/category.ejs",{listings,wishList});
+}
+
+module.exports.reservations=async(req,res)=>{
+    const ownerListings = await Listing.find({ owner: req.params.id });
+    const listingIds = ownerListings.map(listing => listing._id);
+
+    const allBookings = await Booking.find({ listing: { $in: listingIds } }).populate('user').populate('listing');
+
+    if(allBookings.length === 0){
+        return res.render("error.ejs",{message:"No Reservation requests found!"})
+    }
+    const reservations = listingIds.map(id => {
+        const bookings = allBookings.filter(booking => booking.listing.equals(id));
+        return bookings.length > 0 ? { listingId: id, bookings } : null;
+    }).filter(reservation => reservation !== null);
+
+    res.render("users/reservation.ejs",{reservations})
+   
 }

@@ -10,7 +10,8 @@ module.exports.createReview = async(req,res)=>{
     console.log(newReview);
     listing.reviews.push(newReview);
 
-    await newReview.save();
+    const result = await newReview.save();
+    console.log(result)
     await listing.save();
 
     req.flash("success","New Review created");

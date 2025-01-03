@@ -53,3 +53,32 @@ module.exports.getBookings = async(req,res)=>{
     res.render("users/booking.ejs",{userBookings,wishList})
     
 }
+
+module.exports.cancelRoute = async(req,res)=>{
+    const id = req.params.id;
+    console.log(id)
+    const booking = await Booking.findById(id);
+    if(!booking){
+        req.flash("error","Booking does not exist")
+        res.redirect("/listings")
+    }
+    booking.status = "canceled"
+    const result = await booking.save()
+    req.flash("success","Booking status is updated to canceled!!")
+    res.redirect(`/listings/reservations/${req.user._id}`)
+}
+
+module.exports.confirmRoute = async(req,res)=>{
+    const id = req.params.id;
+    console.log(id)
+    const booking = await Booking.findById(id);
+    if(!booking){
+        req.flash("error","Booking does not exist")
+        res.redirect("/listings")
+    }
+    booking.status = "confirmed"
+    const result = await booking.save()
+    console.log("Booking status updated",result)
+    req.flash("success","Booking status is updated to Confirmed!!")
+    res.redirect(`/listings/reservations/${req.user._id}`)
+}
