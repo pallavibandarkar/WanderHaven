@@ -77,7 +77,6 @@ app.use((req,res,next)=>{
     res.locals.success=req.flash("success");
     res.locals.error=req.flash("error");
     res.locals.currUser = req.user;
-    //console.log(res.locals.success);
     next();
 })
 
@@ -95,9 +94,6 @@ app.all("*",(req,res,next)=>{
 })
 app.use((err,req,res,next)=>{
     let {statusCode=404,message="Page not found!!"}=err;
-    //console.log(statusCode);
-    console.log(err.message);
-    console.log(err)
     res.status(statusCode).render("error.ejs",{message});
 })
 

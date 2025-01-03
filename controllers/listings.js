@@ -39,25 +39,15 @@ module.exports.showListings = async (req,res)=>{
         req.flash("error","Listing you requested for does not exist");
         return res.redirect("/listings");
     }
-    console.log("All listings",listing)
     res.render("listings/show.ejs",{listing});
-
 }
 
 module.exports.createListing = async (req,res,next)=>{
-    console.log(req.files)
     if (!req.files || req.files.length === 0) {
         req.flash('error', 'At least one image is required.');
         return res.redirect('/listings/new'); 
     }
-    // let response = await geocodingClient.forwardGeocode({
-    //     query: req.body.listing.location,
-    //     limit: 1
-    //   })
-    //     .send()
-    // console.log("------------",response.body.features[0].geometry);
-    // res.send("done!!");
-
+    
     const response = await axios.get('https://api.opencagedata.com/geocode/v1/json', {
         params: {
           q: req.body.listing.location, 
@@ -82,7 +72,6 @@ module.exports.createListing = async (req,res,next)=>{
     newlisting.owner = req.user._id;
     newlisting.geometry =geometry
     if (req.files && req.files.length > 0) {
-        console.log(req.files)
         const imageData = req.files.map(file => ({
             url: file.path,
             filename: file.filename,
@@ -110,7 +99,6 @@ module.exports.renderEditForm = async(req,res)=>{
 }
 
 module.exports.updateRoute = async (req,res,next)=>{
-    console.log(req.files)
     let {id}=req.params;
     let listing = await Listing.findById(id);
 
@@ -135,7 +123,6 @@ module.exports.updateRoute = async (req,res,next)=>{
             coordinates: [resultGeometry.lng, resultGeometry.lat]  //[longitude, latitude]
         };
     
-        console.log(geometry)
         listing.geometry = geometry
         const data = await listing.save()
     }
@@ -195,7 +182,6 @@ module.exports.search = async(req,res)=>{
         }
     }
     const allListings = await Listing.find({location:location})
-    console.log(allListings)
     if(allListings.length === 0){
         return res.render("error.ejs",{message:"No Search Found"})
     }
@@ -205,7 +191,6 @@ module.exports.search = async(req,res)=>{
 
 module.exports.categoryListing = async(req,res)=>{
     let {category} = req.params;
-    console.log("category:",category);
     let listings = await Listing.find({category : category});
 
     let wishList = [];

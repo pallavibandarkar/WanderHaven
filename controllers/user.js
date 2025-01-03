@@ -11,7 +11,6 @@ module.exports.signup = async (req,res)=>{
         let {username,email,password} = req.body;
         const newUser = new User ({email,username});
         const registeredUser = await User.register(newUser,password);
-        console.log(registeredUser);
         req.login(registeredUser,((err)=>{
             if(err){
                 return next(err);
@@ -35,10 +34,8 @@ module.exports.renderLoginForm = (req,res)=>{
 
 module.exports.login = async(req,res)=>{
     req.flash("success","Welcome back to wanderlust!!");
-        // res.locals.redirectUrl = req.session.redirectUrl;
-        let redirectUrl = res.locals.redirectUrl || "/listings"
-        console.log(redirectUrl);
-        res.redirect(redirectUrl);
+    let redirectUrl = res.locals.redirectUrl || "/listings"
+    res.redirect(redirectUrl);
 }
 
 module.exports.logout = (req,res)=>{
@@ -78,8 +75,7 @@ module.exports.addTowishList = async (req, res) => {
         req.flash("success","Added to wishlist");
         return res.redirect("/listing/wishlist");
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "An error occurred while adding to wishlist" });
+        res.redirect("error.ejs",{ message: "An error occurred while adding to wishlist" });
     }
 };
 
@@ -91,16 +87,14 @@ module.exports.getWishList = async(req,res)=>{
                 model: "Listing"
             });
 
-        console.log(getuser); 
-
         if(getuser.wishList.length === 0){
             return res.render("error.ejs",{message:"No WishList Found"})
         }
         
         res.render("users/wishList.ejs",{getuser});
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Internal Server Error");
+       
+        res.render("error.ejs",{message:"Internal Server Error"});
     }
 }
 
@@ -111,8 +105,7 @@ module.exports.removeWislist=async(req,res)=>{
         req.flash("success","Removed From Wishlist")
         res.redirect("/listing/wishlist")
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Internal Server Error");
+        res.render("error.ejs",{message:"Internal Server Error"});
     }
 }
 
@@ -136,6 +129,6 @@ module.exports.getPropertyList = async(req,res)=>{
         res.render("users/properties.ejs",{properties,wishList})
     }
     catch(err){
-        console.log(err)
+        res.render("error.ejs",{message:"Error while fetching property details"})
     }
 }

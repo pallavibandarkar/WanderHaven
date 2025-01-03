@@ -156,10 +156,7 @@
         
       </div>
     </div>
-    <!-- <h2>All listings</h2> -->
-    <!-- <form method="GET" action="/listings/new">
-        <button>Create new Listing</button>
-    </form> -->
+    
     <h5 class="Explore">Explore Categories</h5>
     <div id="filters">
       <div class="filter">
@@ -323,10 +320,10 @@
 
   wishListIcons.forEach(icon => {
     icon.addEventListener("click", (event) => {
-      // Remove active class from all icons
+      
       wishListIcons.forEach(i => i.classList.remove("active"));
       
-      // Add active class to the clicked icon
+      
       event.currentTarget.classList.add("active");
       console.log("heart clicked");
     });

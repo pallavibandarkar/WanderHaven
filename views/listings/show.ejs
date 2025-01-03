@@ -219,7 +219,7 @@
 
 
 <script>
-    const perNightCost = listing.price; // Example price per night
+    const perNightCost = listing.price; 
     const totalPriceElement = document.getElementById('totalPrice');
     const selectedStartDateElement = document.getElementById('selectedStartDate');
     const selectedEndDateElement = document.getElementById('selectedEndDate');
@@ -227,50 +227,43 @@
     const startDateInput = document.getElementById('startDate');
     const endDateInput = document.getElementById('endDate');
 
-    // Initialize Flatpickr in inline mode
+    
     const calendar = flatpickr("#inlineCalendar", {
         mode: "range",
         minDate: "today",
         dateFormat: "Y-m-d",
-        inline: true, // This makes the calendar always visible
+        inline: true, 
         onChange: function(selectedDates) {
             if (selectedDates.length === 2) {
                 const [startDate, endDate] = selectedDates;
 
-                // Check if the start date is before the end date
+                
                 if (startDate < endDate) {
                     const totalNights = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
                     const totalPrice = totalNights * perNightCost;
 
-                    // startDateInput.value = startDate.toISOString().split("T")[0];
-                    // endDateInput.value = endDate.toISOString().split("T")[0];
-
                     startDateInput.value = startDate.toLocaleDateString("en-CA");
                     endDateInput.value = endDate.toLocaleDateString("en-CA");
 
-
-                    // Update the total price
                     totalPriceElement.textContent = totalPrice.toLocaleString("en-IN");
                     document.getElementById('totalPriceInput').value = totalPrice;
-                    // Display selected dates
 
                     const dateOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
                     selectedEndDateElement.innerHTML = `<b class="mb-3">Check-out: ${endDate.toLocaleDateString("en-GB", dateOptions)}</b>`;
                     selectedStartDateElement.innerHTML = `<b class="mb-3">Check-in: ${startDate.toLocaleDateString("en-GB", dateOptions)}<b>`
                     
                     selectedStartDateElement.style.display = 'block';
-                    selectedEndDateElement.style.display = "block" // Show the selected dates
-                    errorMessageElement.style.display = 'none'; // Hide error message
+                    selectedEndDateElement.style.display = "block"
+                    errorMessageElement.style.display = 'none';
                 } else {
-                    // Show error message if the range is invalid
                     errorMessageElement.style.display = 'block';
                     totalPriceElement.textContent = '0';
-                    selectedDatesElement.style.display = 'none'; // Hide if not both dates are valid
+                    selectedDatesElement.style.display = 'none';
                 }
             } else {
                 totalPriceElement.textContent = '0';
-                selectedDatesElement.style.display = 'none'; // Hide if not both dates are selected
-                errorMessageElement.style.display = 'none'; // Hide error message
+                selectedDatesElement.style.display = 'none'; 
+                errorMessageElement.style.display = 'none'; 
             }
         }
     });

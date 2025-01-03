@@ -236,38 +236,21 @@
   let menubar = document.querySelector(".menubar");
   let showBox = document.querySelector(".navbar-btns-responsive");
   let menu = false
-  // menubar.addEventListener("click",()=>{
-  //   if(menu == false){
-  //     showBox.style.display="block"
-  //     menu = true
-  //   }else{
-  //     showBox.style.display = "none"
-  //     menu = false
-  //   }
-  // })
 
   menubar.addEventListener("click", () => {
     if (menu == false) {
-      showBox.style.display = "flex"; // Show the menu
+      showBox.style.display = "flex"; 
       setTimeout(() => {
-        showBox.style.opacity = "1"; // Fade in effect
-      }, 10); // Small timeout to allow display change to take effect
+        showBox.style.opacity = "1"; 
+      }, 10); 
       menu = true;
     } else {
-      showBox.style.opacity = "0"; // Fade out effect
+      showBox.style.opacity = "0"; 
       setTimeout(() => {
-        showBox.style.display = "none"; // Hide the menu after fading out
-      }, 300); // Match this timeout with the CSS transition duration
+        showBox.style.display = "none";
+      }, 300); 
       menu = false;
     }
   });
 
-  // menubar.addEventListener("click",()=>{
-  //   if(menu == true){
-  //     showBox.style.display = "none"
-  //     menu = false
-  //   }
-    
-  // })
-  
 </script>
